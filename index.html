@@ -1,1220 +1,302 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INV Team Checklist</title>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@500;600;700&display=swap" rel="stylesheet">
+
 <style>
-:root {
-  --navy: #0f2744;
-  --blue: #1a4da0;
-  --accent: #f59e0b;
-  --accent2: #10b981;
-  --red: #ef4444;
-  --surface: #f1f5f9;
-  --card: #ffffff;
-  --border: #e2e8f0;
-  --text: #1e293b;
-  --muted: #64748b;
-  --sidebar-w: 260px;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Sarabun', sans-serif;
-  background: var(--surface);
-  color: var(--text);
-  display: flex;
-  min-height: 100vh;
-  font-size: 14px;
-}
-
-/* SIDEBAR */
-.sidebar {
-  width: var(--sidebar-w);
-  background: var(--navy);
-  position: fixed;
-  top: 0; left: 0; bottom: 0;
-  overflow-y: auto;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar-head {
-  padding: 22px 18px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-.sidebar-logo {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: var(--accent);
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-
-.sidebar-title {
-  font-family: 'Prompt', sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  color: #fff;
-  line-height: 1.35;
-}
-
-/* Progress bar */
-.progress-wrap {
-  padding: 14px 18px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-.progress-label {
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 6px;
-}
-
-.progress-bar {
-  height: 5px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent2), var(--accent));
-  border-radius: 10px;
-  transition: width 0.4s ease;
-}
-
-/* Nav tabs */
-.nav-tabs {
-  flex: 1;
-  padding: 10px 0;
-}
-
-.nav-tab {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 18px;
-  cursor: pointer;
-  border-left: 3px solid transparent;
-  transition: all 0.2s;
-  color: rgba(255,255,255,0.6);
-  font-size: 13px;
-}
-
-.nav-tab:hover { background: rgba(255,255,255,0.06); color: #fff; }
-
-.nav-tab.active {
-  border-left-color: var(--accent);
-  background: rgba(245,158,11,0.12);
-  color: #fff;
-  font-weight: 600;
-}
-
-.nav-tab .tab-icon { font-size: 17px; flex-shrink: 0; }
-
-.nav-tab .tab-count {
-  margin-left: auto;
-  background: rgba(255,255,255,0.1);
-  border-radius: 20px;
-  padding: 1px 8px;
-  font-size: 11px;
-  color: rgba(255,255,255,0.5);
-}
-
-.nav-tab.active .tab-count {
-  background: rgba(245,158,11,0.25);
-  color: var(--accent);
-}
-
-.nav-tab .tab-prog {
-  font-size: 10px;
-  color: var(--accent2);
-  margin-left: 2px;
-}
-
-/* MAIN */
-.main {
-  margin-left: var(--sidebar-w);
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-/* TOPBAR */
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  padding: 12px 28px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.05);
-}
-
-.topbar-title {
-  font-family: 'Prompt', sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--navy);
-}
-
-.topbar-sub {
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 1px;
-}
-
-.topbar-actions {
-  margin-left: auto;
-  display: flex;
-  gap: 8px;
-}
-
-.btn {
-  padding: 7px 14px;
-  border-radius: 7px;
-  border: none;
-  cursor: pointer;
-  font-family: 'Sarabun', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  transition: all 0.2s;
-}
-
-.btn-outline {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--muted);
-}
-
-.btn-outline:hover { border-color: var(--blue); color: var(--blue); }
-
-.btn-primary {
-  background: var(--navy);
-  color: #fff;
-}
-
-.btn-primary:hover { background: var(--blue); }
-
-/* CONTENT */
-.content { padding: 24px 28px; flex: 1; }
-
-/* INFO BANNER */
-.info-banner {
-  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
-  border-radius: 12px;
-  padding: 20px 24px;
-  color: #fff;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.banner-icon { font-size: 36px; flex-shrink: 0; }
-
-.banner-text h2 {
-  font-family: 'Prompt', sans-serif;
-  font-size: 17px;
-  font-weight: 600;
-  margin-bottom: 3px;
-}
-
-.banner-text p {
-  font-size: 13px;
-  color: rgba(255,255,255,0.7);
-  line-height: 1.5;
-}
-
-.banner-stats {
-  margin-left: auto;
-  display: flex;
-  gap: 20px;
-  flex-shrink: 0;
-}
-
-.stat { text-align: center; }
-.stat-num {
-  font-family: 'Prompt', sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--accent);
-  line-height: 1;
-}
-.stat-label { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 3px; }
-
-/* CATEGORY */
-.category-block { margin-bottom: 24px; }
-
-.cat-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 16px;
-  background: var(--navy);
-  border-radius: 8px;
-  margin-bottom: 10px;
-  color: #fff;
-  font-family: 'Prompt', sans-serif;
-  font-size: 13.5px;
-  font-weight: 600;
-}
-
-.cat-count {
-  margin-left: auto;
-  font-size: 11px;
-  color: rgba(255,255,255,0.5);
-  font-family: 'Sarabun', sans-serif;
-  font-weight: 400;
-}
-
-/* CHECKLIST ITEM */
-.check-item {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  margin-bottom: 8px;
-  overflow: hidden;
-  transition: box-shadow 0.2s;
-}
-
-.check-item:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.08); }
-
-.check-item.done { border-left: 3px solid var(--accent2); }
-.check-item.fail { border-left: 3px solid var(--red); }
-.check-item.pending { border-left: 3px solid var(--accent); }
-
-.check-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 13px 16px;
-  cursor: pointer;
-}
-
-.check-no {
-  background: var(--surface);
-  border-radius: 6px;
-  padding: 3px 8px;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--navy);
-  flex-shrink: 0;
-  font-family: 'Prompt', sans-serif;
-  min-width: 52px;
-  text-align: center;
-}
-
-.check-item.done .check-no { background: #d1fae5; color: #065f46; }
-.check-item.fail .check-no { background: #fee2e2; color: #991b1b; }
-.check-item.pending .check-no { background: #fef3c7; color: #92400e; }
-
-.check-info { flex: 1; min-width: 0; }
-
-.check-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 2px;
-  line-height: 1.4;
-}
-
-.check-meta {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.meta-tag {
-  font-size: 11px;
-  color: var(--muted);
-  display: flex;
-  align-items: center;
-  gap: 3px;
-}
-
-.check-status {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.status-select {
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 4px 8px;
-  font-family: 'Sarabun', sans-serif;
-  font-size: 12px;
-  cursor: pointer;
-  background: var(--surface);
-  color: var(--text);
-  outline: none;
-}
-
-.status-select:focus { border-color: var(--blue); }
-
-.toggle-btn {
-  color: var(--muted);
-  font-size: 14px;
-  transition: transform 0.25s;
-}
-
-.check-item.open .toggle-btn { transform: rotate(180deg); }
-
-/* DETAIL PANEL */
-.check-detail {
-  display: none;
-  border-top: 1px solid var(--border);
-  padding: 14px 16px 14px 80px;
-  background: #fafbff;
-}
-
-.check-item.open .check-detail { display: block; }
-
-.detail-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-
-.detail-box {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px 14px;
-}
-
-.detail-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
-
-.detail-text {
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--text);
-  white-space: pre-line;
-}
-
-.note-input {
-  width: 100%;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-family: 'Sarabun', sans-serif;
-  font-size: 13px;
-  resize: none;
-  background: var(--card);
-  color: var(--text);
-  outline: none;
-  transition: border 0.2s;
-}
-
-.note-input:focus { border-color: var(--blue); }
-
-/* SHEET SECTION */
-.sheet-section { display: none; }
-.sheet-section.active { display: block; }
-
-/* SPECIAL: Pre-Count night selector */
-.night-selector {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 18px;
-  flex-wrap: wrap;
-}
-
-.night-btn {
-  padding: 7px 18px;
-  border-radius: 20px;
-  border: 1.5px solid var(--border);
-  background: var(--card);
-  cursor: pointer;
-  font-family: 'Sarabun', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-  transition: all 0.2s;
-}
-
-.night-btn:hover { border-color: var(--navy); color: var(--navy); }
-.night-btn.active { background: var(--navy); border-color: var(--navy); color: #fff; }
-
-/* SUMMARY BAR */
-.summary-bar {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.sum-pill {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 12.5px;
-  font-weight: 500;
-}
-
-.sum-done { background: #d1fae5; color: #065f46; }
-.sum-fail { background: #fee2e2; color: #991b1b; }
-.sum-pending { background: #fef3c7; color: #92400e; }
-.sum-empty { background: var(--surface); color: var(--muted); }
-
-/* MOBILE */
-@media (max-width: 768px) {
-  body { display: block; }
-  .sidebar {
-    transform: translateX(-100%);
-    transition: transform 0.3s;
-  }
-  .sidebar.open { transform: translateX(0); }
-  .main { margin-left: 0; }
-  .topbar { padding: 10px 14px; }
-  .content { padding: 16px 14px; }
-  .detail-grid { grid-template-columns: 1fr; }
-  .check-detail { padding-left: 16px; }
-  .banner-stats { display: none; }
-  .info-banner { flex-direction: column; gap: 10px; }
-  .ham { display: flex !important; }
-}
-
-.ham {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  width: 36px;
-  height: 36px;
-  padding: 7px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-}
-.ham span { display: block; height: 2px; background: var(--navy); border-radius: 2px; }
-
-.overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 99;
-}
-.overlay.show { display: block; }
-
-
-  /* STORE SELECTOR */
-  .store-bar {
-    background: var(--card);
-    border-bottom: 1px solid var(--border);
-    padding: 10px 28px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .store-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-  .store-search-wrap {
-    position: relative;
-    flex: 1;
-    max-width: 320px;
-  }
-  .store-search-wrap input {
-    width: 100%;
-    padding: 7px 12px 7px 32px;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    font-family: 'Sarabun', sans-serif;
-    font-size: 13px;
-    background: var(--surface);
-    color: var(--text);
-    outline: none;
-    transition: border 0.2s;
-  }
-  .store-search-wrap input:focus { border-color: var(--blue); background: #fff; }
-  .store-search-icon {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--muted);
-    font-size: 14px;
-    pointer-events: none;
-  }
-  .store-dropdown {
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    right: 0;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    max-height: 280px;
-    overflow-y: auto;
-    z-index: 200;
-    display: none;
-  }
-  .store-dropdown.show { display: block; }
-  .store-option {
-    padding: 9px 14px;
-    cursor: pointer;
-    font-size: 13px;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.15s;
-  }
-  .store-option:last-child { border-bottom: none; }
-  .store-option:hover { background: var(--surface); }
-  .store-option.selected { background: #dbeafe; color: var(--navy); font-weight: 600; }
-  .store-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--navy);
-    color: #fff;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 12.5px;
-    font-weight: 500;
-  }
-  .store-badge-clear {
-    cursor: pointer;
-    opacity: 0.7;
-    font-size: 14px;
-    line-height: 1;
-  }
-  .store-badge-clear:hover { opacity: 1; }
-  .no-store-msg {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--muted);
-  }
-  .no-store-msg .ns-icon { font-size: 40px; margin-bottom: 10px; }
-  .no-store-msg p { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
-  .no-store-msg small { font-size: 12px; }
-  @media (max-width: 768px) {
-    .store-bar { padding: 10px 14px; }
-    .store-search-wrap { max-width: 100%; }
-  }
-
-  /* scrollbar */
-.sidebar::-webkit-scrollbar { width: 3px; }
-.sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0D2E6B;--blue:#1A4DA0;--light-blue:#D4E3F7;--green:#1E6E44;--light-green:#D5F0E2;--purple:#6C3483;--light-purple:#EDE2F5;--orange:#A0522D;--light-orange:#FCEBD8;--amber:#7D6608;--light-amber:#FDF5CC}
+body{font-family:'Sarabun',sans-serif;background:var(--color-background-tertiary);color:var(--color-text-primary)}
 </style>
-</head>
-<body>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+<h2 class="sr-only">Store Inventory Preparation Checklist - เลือกสาขาและกรอกสถานะการเตรียมความพร้อม</h2>
 
-<nav class="sidebar" id="sidebar">
-  <div class="sidebar-head">
-    <div class="sidebar-logo">Inventory Audit</div>
-    <div class="sidebar-title">INV Team<br>Checklist</div>
-  </div>
+<div id="app">
 
-  <div class="progress-wrap">
-    <div class="progress-label">
-      <span>ความคืบหน้ารวม</span>
-      <span id="prog-text">0 / 61</span>
-    </div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="prog-bar" style="width:0%"></div>
+<div id="sidebar">
+  <div id="sidebar-header">
+    <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.08em;margin-bottom:8px">INVENTORY AUDIT</div>
+    <div style="font-size:17px;font-weight:600;color:var(--color-text-primary)">Store Preparation<br>Checklist</div>
+    <div style="margin-top:12px;position:relative">
+      <i class="ti ti-search" aria-hidden="true" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--color-text-secondary)"></i>
+      <input id="store-search" type="text" placeholder="ค้นหาสาขา..." style="width:100%;padding:8px 10px 8px 32px;font-size:13px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary)">
     </div>
   </div>
+  <div id="store-list"></div>
+</div>
 
-  <div class="nav-tabs">
-    <div class="nav-tab active" onclick="showSheet(0)" id="tab0">
-      <span class="tab-icon">⚙️</span>
-      <span>ก่อนนับ (Preparation)</span>
-      <span class="tab-count" id="cnt0">22</span>
+<div id="main">
+  <div id="main-inner">
+
+    <div id="store-banner">
+      <div>
+        <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.08em">กำลังดู</div>
+        <div id="banner-name" style="font-size:20px;font-weight:600;margin-top:2px">เลือกสาขาจากรายการ</div>
+      </div>
+      <div id="banner-stats" style="display:flex;gap:12px"></div>
     </div>
-    <div class="nav-tab" onclick="showSheet(1)" id="tab1">
-      <span class="tab-icon">🌙</span>
-      <span>Pre-Count (คืนที่ 1-4)</span>
-      <span class="tab-count" id="cnt1">12</span>
+
+    <div id="tabs-row">
+      <button class="tab-btn active" data-tab="0">📋 ผู้ประสานงาน</button>
+      <button class="tab-btn" data-tab="1">🗺️ Layout</button>
+      <button class="tab-btn" data-tab="2">🔧 อุปกรณ์</button>
+      <button class="tab-btn" data-tab="3">📦 แผนกก่อนนับ</button>
+      <button class="tab-btn" data-tab="4">📅 แผนรับสินค้า</button>
+      <button class="tab-btn" data-tab="5">📞 ยืนยันก่อนนับ</button>
     </div>
-    <div class="nav-tab" onclick="showSheet(2)" id="tab2">
-      <span class="tab-icon">📋</span>
-      <span>Regular Count</span>
-      <span class="tab-count" id="cnt2">16</span>
+
+    <div id="checklist-area"></div>
+
+    <div id="empty-state">
+      <i class="ti ti-building-store" aria-hidden="true" style="font-size:48px;color:var(--color-text-secondary);margin-bottom:12px"></i>
+      <div style="font-size:15px;font-weight:500;color:var(--color-text-secondary)">เลือกสาขาจากรายการทางซ้าย</div>
+      <div style="font-size:13px;color:var(--color-text-secondary);margin-top:4px">เพื่อเริ่มกรอก Checklist</div>
     </div>
-    <div class="nav-tab" onclick="showSheet(3)" id="tab3">
-      <span class="tab-icon">✅</span>
-      <span>Recheck & Final Report</span>
-      <span class="tab-count" id="cnt3">11</span>
-    </div>
+
   </div>
-</nav>
+</div>
 
-<div class="main">
-  <div class="topbar">
-    <button class="ham" id="ham" onclick="toggleSidebar()">
-      <span></span><span></span><span></span>
-    </button>
-    <div>
-      <div class="topbar-title" id="topbar-title">ก่อนนับ (Pre-Count Preparation)</div>
-      <div class="topbar-sub" id="topbar-sub">INV CHECKLIST – ทีม Inventory ต้องดำเนินการให้ครบถ้วน</div>
-    </div>
-    <div class="topbar-actions">
-      <button class="btn btn-outline" onclick="resetSheet()">🔄 รีเซ็ต</button>
-      <button class="btn btn-primary" onclick="markAllDone()">✓ เสร็จทั้งหมด</button>
-    </div>
-  </div>
+</div>
 
-  <!-- STORE BAR -->
-  <div class="store-bar" id="store-bar">
-    <span class="store-label">🏬 สาขา :</span>
-    <div class="store-search-wrap" id="store-search-wrap">
-      <span class="store-search-icon">🔍</span>
-      <input type="text" id="store-input" placeholder="พิมพ์ชื่อหรือรหัสสาขา..." 
-        oninput="filterStores()" onfocus="openDropdown()" onblur="closeDropdownDelay()" autocomplete="off">
-      <div class="store-dropdown" id="store-dropdown"></div>
-    </div>
-    <div id="store-selected" style="display:none">
-      <div class="store-badge">
-        <span id="store-badge-text">—</span>
-        <span class="store-badge-clear" onclick="clearStore()">✕</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="content" id="main-content">
-
-    <!-- NO STORE SELECTED -->
-    <div id="no-store-msg" style="display:none">
-      <div class="no-store-msg">
-        <div class="ns-icon">🏬</div>
-        <p>กรุณาเลือกสาขาก่อนใช้งาน</p>
-        <small>พิมพ์ชื่อหรือรหัสสาขาในช่องด้านบน</small>
-      </div>
-    </div>
-
-    <!-- SHEET 0: ก่อนนับ -->
-    <div class="sheet-section active" id="sheet0">
-      <div class="info-banner">
-        <div class="banner-icon">⚙️</div>
-        <div class="banner-text">
-          <h2>INV CHECKLIST – ก่อนนับ (Pre-Count Preparation)</h2>
-          <p>ทีม Inventory ต้องดำเนินการให้ครบถ้วน ก่อนเริ่มการตรวจนับสินค้า</p>
-        </div>
-        <div class="banner-stats">
-          <div class="stat"><div class="stat-num" id="s0-total">22</div><div class="stat-label">รายการ</div></div>
-          <div class="stat"><div class="stat-num" id="s0-done" style="color:#10b981">0</div><div class="stat-label">เสร็จแล้ว</div></div>
-        </div>
-      </div>
-      <div class="summary-bar" id="sum0"></div>
-      <div id="items0"></div>
-    </div>
-
-    <!-- SHEET 1: Pre-Count -->
-    <div class="sheet-section" id="sheet1">
-      <div class="info-banner">
-        <div class="banner-icon">🌙</div>
-        <div class="banner-text">
-          <h2>INV CHECKLIST – Pre-Count (คืนที่ 1-4)</h2>
-          <p>ดำเนินการซ้ำทุกคืน Pre-Count — เลือกคืนที่กำลังดำเนินการ</p>
-        </div>
-        <div class="banner-stats">
-          <div class="stat"><div class="stat-num" id="s1-total">12</div><div class="stat-label">รายการ/คืน</div></div>
-          <div class="stat"><div class="stat-num" id="s1-done" style="color:#10b981">0</div><div class="stat-label">เสร็จแล้ว</div></div>
-        </div>
-      </div>
-      <div class="night-selector">
-        <button class="night-btn active" onclick="selectNight(1,this)">🌙 คืนที่ 1</button>
-        <button class="night-btn" onclick="selectNight(2,this)">🌙 คืนที่ 2</button>
-        <button class="night-btn" onclick="selectNight(3,this)">🌙 คืนที่ 3</button>
-        <button class="night-btn" onclick="selectNight(4,this)">🌙 คืนที่ 4</button>
-      </div>
-      <div class="summary-bar" id="sum1"></div>
-      <div id="items1"></div>
-    </div>
-
-    <!-- SHEET 2: Regular Count -->
-    <div class="sheet-section" id="sheet2">
-      <div class="info-banner">
-        <div class="banner-icon">📋</div>
-        <div class="banner-text">
-          <h2>INV CHECKLIST – Regular Count</h2>
-          <p>ดำเนินการในช่วงเย็นก่อน Regular Count และตลอดวัน Regular Count</p>
-        </div>
-        <div class="banner-stats">
-          <div class="stat"><div class="stat-num" id="s2-total">16</div><div class="stat-label">รายการ</div></div>
-          <div class="stat"><div class="stat-num" id="s2-done" style="color:#10b981">0</div><div class="stat-label">เสร็จแล้ว</div></div>
-        </div>
-      </div>
-      <div class="summary-bar" id="sum2"></div>
-      <div id="items2"></div>
-    </div>
-
-    <!-- SHEET 3: Recheck -->
-    <div class="sheet-section" id="sheet3">
-      <div class="info-banner">
-        <div class="banner-icon">✅</div>
-        <div class="banner-text">
-          <h2>INV CHECKLIST – Recheck & Final Report</h2>
-          <p>ดำเนินการหลัง Regular Count เสร็จสิ้น – ตรวจสอบและสรุปผล</p>
-        </div>
-        <div class="banner-stats">
-          <div class="stat"><div class="stat-num" id="s3-total">11</div><div class="stat-label">รายการ</div></div>
-          <div class="stat"><div class="stat-num" id="s3-done" style="color:#10b981">0</div><div class="stat-label">เสร็จแล้ว</div></div>
-        </div>
-      </div>
-      <div class="summary-bar" id="sum3"></div>
-      <div id="items3"></div>
-    </div>
-
-  </div><!-- /content -->
-</div><!-- /main -->
+<style>
+#app{display:flex;min-height:580px;gap:0;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;background:var(--color-background-primary)}
+#sidebar{width:220px;min-width:220px;background:var(--color-background-secondary);border-right:0.5px solid var(--color-border-tertiary);display:flex;flex-direction:column;overflow:hidden}
+#sidebar-header{padding:16px 14px 12px;border-bottom:0.5px solid var(--color-border-tertiary)}
+#store-list{flex:1;overflow-y:auto;padding:6px}
+.store-item{padding:8px 10px;border-radius:var(--border-radius-md);cursor:pointer;font-size:12.5px;color:var(--color-text-primary);display:flex;justify-content:space-between;align-items:center;transition:background .12s}
+.store-item:hover{background:var(--color-background-primary)}
+.store-item.active{background:var(--color-background-info);color:var(--color-text-info);font-weight:500}
+.store-item .store-code{font-size:10px;color:var(--color-text-secondary);font-weight:500}
+.store-item.active .store-code{color:var(--color-text-info)}
+.store-dot{width:7px;height:7px;border-radius:50%;background:var(--color-border-secondary);flex-shrink:0}
+.store-dot.done{background:#1E6E44}
+.store-dot.partial{background:#BA7517}
+#main{flex:1;overflow:hidden;display:flex;flex-direction:column}
+#main-inner{height:100%;display:flex;flex-direction:column;overflow:hidden}
+#store-banner{padding:16px 20px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:var(--color-background-primary)}
+#tabs-row{display:flex;gap:2px;padding:10px 20px 0;background:var(--color-background-secondary);border-bottom:0.5px solid var(--color-border-tertiary);flex-shrink:0;overflow-x:auto}
+.tab-btn{padding:7px 13px;font-size:12px;border:none;background:none;cursor:pointer;border-radius:var(--border-radius-md) var(--border-radius-md) 0 0;color:var(--color-text-secondary);font-family:inherit;font-weight:500;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab-btn.active{color:var(--color-text-info);border-bottom:2px solid var(--color-text-info);background:var(--color-background-primary)}
+.tab-btn:hover:not(.active){background:var(--color-background-primary);color:var(--color-text-primary)}
+#checklist-area{flex:1;overflow-y:auto;padding:16px 20px;display:none}
+#empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.section-head{font-size:11px;font-weight:600;letter-spacing:.06em;padding:8px 12px;border-radius:var(--border-radius-md);margin:14px 0 8px;color:#fff}
+.checklist-row{display:grid;grid-template-columns:1fr 130px 90px;gap:8px;padding:9px 12px;border-radius:var(--border-radius-md);background:var(--color-background-secondary);margin-bottom:5px;align-items:start;border:0.5px solid var(--color-border-tertiary)}
+.checklist-row:hover{border-color:var(--color-border-secondary)}
+.item-topic{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.item-detail{font-size:11.5px;color:var(--color-text-secondary);margin-top:2px;line-height:1.5}
+.item-deadline{font-size:11px;color:var(--color-text-secondary);padding-top:2px}
+.status-select{width:100%;font-size:11.5px;padding:5px 7px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);font-family:inherit;cursor:pointer}
+.status-select.s-done{background:var(--color-background-success);color:var(--color-text-success);border-color:var(--color-border-success)}
+.status-select.s-nope{background:var(--color-background-danger);color:var(--color-text-danger);border-color:var(--color-border-danger)}
+.status-select.s-wip{background:var(--color-background-warning);color:var(--color-text-warning);border-color:var(--color-border-warning)}
+.status-select.s-na{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.stat-pill{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary)}
+.stat-done{background:var(--color-background-success);color:var(--color-text-success)}
+.stat-pend{background:var(--color-background-warning);color:var(--color-text-warning)}
+</style>
 
 <script>
-const SHEETS = [
-  {
-    title: 'ก่อนนับ (Pre-Count Preparation)',
-    sub: 'INV CHECKLIST – ทีม Inventory ต้องดำเนินการให้ครบถ้วน',
-    data: [
-      {type:'cat', name:'⚙️  System Setup'},
-      {no:'S1', title:'Delete Data Inventory All (ยกเว้น Process Apply)', detail:'ลบข้อมูล Inventory ทั้งหมดในระบบก่อนเริ่มรอบใหม่\n(ยกเว้นรายการที่อยู่ระหว่าง Process Apply)', owner:'INV Team + IT', deadline:'ก่อน Pre-count', status:'done'},
-      {no:'S2', title:'Check Access Point / Router', detail:'ตรวจสอบ AP/Router ทุกจุดในพื้นที่ตรวจนับ\nบันทึกจุดอับสัญญาณ WiFi พร้อมแจ้ง IT', owner:'INV Team + IT', deadline:'ก่อน Pre-count'},
-      {no:'S3', title:'Create Inventory Aisle-Bay', detail:'สร้าง Aisle-Bay ในระบบให้ตรงกับ Layout จริงของสาขา\nรวมพื้นที่ Tent / Container / GR', owner:'INV Team + IT', deadline:'ก่อน Pre-count'},
-      {no:'S4', title:'Create Employee Count Book', detail:'สร้างรายชื่อพนักงานนับ (Count Book) ในระบบ\nพร้อม QR Code สำหรับลงทะเบียน', owner:'INV Team', deadline:'ก่อน Pre-count'},
-      {no:'S5', title:'Print Layout & Count Plan', detail:'พิมพ์ Layout สาขา และแผนการนับ Pre-Count\nแจกจ่ายให้ทีม Supervisor ทุกคน', owner:'INV Team', deadline:'ก่อน Pre-count'},
-      {type:'cat', name:'📱  Tag & Equipment'},
-      {no:'E1', title:'เบิก HHT & ตรวจสอบ Battery', detail:'เบิก HHT ให้ครบตามจำนวนทีมนับ\nตรวจสอบ Battery และ Charger พร้อมใช้งาน', owner:'สาขา', deadline:'ก่อน Pre-count'},
-      {no:'E2', title:'Forklift & Scooter – Battery', detail:'ตรวจสอบแบตเตอรี่ Forklift/Scooter ให้เต็ม\nพร้อมใช้งานตลอดการนับ', owner:'สาขา', deadline:'ก่อน Pre-count'},
-      {no:'E3', title:'Print Count Tag & Sticker', detail:'พิมพ์ Tag และ Sticker สำหรับติดสินค้าที่นับแล้ว\nตรวจสอบจำนวนให้เพียงพอ', owner:'INV Team', deadline:'ก่อน Pre-count'},
-      {type:'cat', name:'🏬  Store Preparation'},
-      {no:'ST1', title:'ประสานงานสาขา – จัดสินค้าก่อนนับ', detail:'แจ้งสาขาจัดสินค้าตาม Layout ที่กำหนด\nตรวจสอบพื้นที่ที่จะตรวจนับ', owner:'INV Supervisor', deadline:'1 วันก่อน Pre-count'},
-      {no:'ST2', title:'กำหนดพื้นที่ห้ามขายระหว่างนับ', detail:'ประสานงานกับ Store Manager\nกำหนดพื้นที่และช่วงเวลาที่ห้ามเคลื่อนย้ายสินค้า', owner:'INV Supervisor', deadline:'ก่อน Pre-count'},
-      {no:'ST3', title:'ตรวจสอบสินค้า GR ค้างรับ', detail:'ตรวจสอบสินค้าที่รอรับใน GR\nประสานงานรับก่อนเริ่มนับ หรือ Hold ไว้ก่อน', owner:'INV Team', deadline:'ก่อน Pre-count'},
-      {no:'ST4', title:'ตรวจสอบ Deposit Goods', detail:'สำรวจสินค้ารับฝากทั้งหมด\nแยกออกจากพื้นที่นับ และบันทึกรายการ', owner:'INV Team', deadline:'ก่อน Pre-count'},
-      {type:'cat', name:'📋  Document & Briefing'},
-      {no:'D1', title:'Briefing ทีมนับ', detail:'บรีฟทีมนับทุกคน\nขั้นตอนการนับ การใช้ HHT การแก้ไข Error', owner:'INV Supervisor', deadline:'ก่อนเริ่มนับ'},
-      {no:'D2', title:'แจก Count Plan และ Layout', detail:'แจก Layout และแผนการนับให้ทุกทีม\nกำหนด Zone และ Responsible Person', owner:'INV Supervisor', deadline:'ก่อนเริ่มนับ'},
-      {no:'D3', title:'สร้างไฟล์ Excel Control Sheet', detail:'สร้างไฟล์ควบคุมงาน\nบันทึก HHT In/Out, Count Progress, Issues', owner:'INV Team', deadline:'ก่อน Pre-count'},
-      {no:'D4', title:'ตรวจสอบ SOP การนับสินค้าพิเศษ', detail:'ทบทวน SOP สำหรับสินค้าน้ำหนัก, สินค้า Hi-Value\nสินค้าในห้องเย็น และ Non-Scan Item', owner:'INV Supervisor', deadline:'ก่อนเริ่มนับ'},
-      {type:'cat', name:'🔗  System Integration Check'},
-      {no:'SYS1', title:'Test HHT Connection', detail:'ทดสอบการเชื่อมต่อ HHT กับระบบ\nทดลอง Scan สินค้าตัวอย่าง', owner:'INV Team + IT', deadline:'ก่อน Pre-count'},
-      {no:'SYS2', title:'Verify Item Master Data', detail:'ตรวจสอบข้อมูลสินค้าในระบบ\nBarcode ถูกต้องและตรงกับสินค้าจริง', owner:'INV Team + IT', deadline:'ก่อน Pre-count'},
-      {no:'SYS3', title:'Check Transfer Pending', detail:'ตรวจสอบรายการ Transfer ที่ยังค้างอยู่\nPO / GR / Transfer ที่ยังไม่ Complete', owner:'INV Team', deadline:'ก่อน Pre-count'},
-      {no:'SYS4', title:'Backup ข้อมูลก่อนเริ่ม', detail:'สำรองข้อมูล Stock ปัจจุบัน\nบันทึก Snapshot ก่อนเริ่มกระบวนการ Inventory', owner:'IT', deadline:'ก่อน Pre-count'},
-    ]
-  },
-  {
-    title: 'Pre-Count (คืนที่ 1-4)',
-    sub: 'INV CHECKLIST – ดำเนินการซ้ำทุกคืน Pre-Count',
-    data: [
-      {type:'cat', name:'⚙️  System – ก่อนเริ่มนับแต่ละคืน'},
-      {no:'P-S1', title:'Start Background Process', detail:'สั่ง Start Background Process ในระบบก่อนเริ่มตรวจนับ\nตรวจสอบว่า Process ทำงานสมบูรณ์', owner:'INV Team', deadline:'ก่อนเริ่มนับ'},
-      {no:'P-S2', title:'Monitor Process Status', detail:'ติดตาม Status ของ Background Process ระหว่างนับ\nแจ้งทีมหาก Process มีปัญหา', owner:'INV Team', deadline:'ระหว่างนับ'},
-      {type:'cat', name:'📱  Tag & Equipment – ประจำคืน'},
-      {no:'P-E1', title:'เบิก-คืน HHT / ตรวจสอบ Battery', detail:'เบิก HHT ให้พนักงานนับทุกคน บันทึกลง Control Sheet\nตรวจสอบ Battery พอเพียงสำหรับคืนนั้น', owner:'สาขา', deadline:'ก่อนเริ่มนับ', note:'INV Team ช่วย Support ครั้งแรกและหลังนับเสร็จให้สาขาเก็บไว้ใช้ครั้งถัดไป'},
-      {no:'P-E2', title:'Forklift & Scooter – Battery', detail:'ตรวจสอบแบตเตอรี่ Forklift/Scooter\nเติมแบตก่อนเริ่มถ้าต่ำกว่า 50%', owner:'สาขา', deadline:'ก่อนเริ่มนับ'},
-      {type:'cat', name:'📦  การนับ – ระหว่างคืน'},
-      {no:'P-C1', title:'กำกับทีมนับตาม Zone ที่กำหนด', detail:'ตรวจสอบว่าทีมนับทำงานตาม Zone\nไม่ข้าม Zone โดยไม่ได้รับอนุญาต', owner:'INV Supervisor', deadline:'ระหว่างนับ'},
-      {no:'P-C2', title:'Monitor Count Progress', detail:'ติดตาม Progress การนับแต่ละ Zone\nบันทึกใน Control Sheet ทุก 1-2 ชม.', owner:'INV Supervisor', deadline:'ระหว่างนับ'},
-      {no:'P-C3', title:'Handle Count Errors / Issues', detail:'แก้ไขปัญหาการนับ เช่น HHT Error, Barcode ไม่ขึ้น\nบันทึก Issue และวิธีแก้ไข', owner:'INV Team', deadline:'ระหว่างนับ'},
-      {type:'cat', name:'🔒  ปิดงาน – หลังนับแต่ละคืน'},
-      {no:'P-CL1', title:'สรุป Count Result ของคืนนั้น', detail:'สรุปจำนวน Aisle-Bay ที่นับเสร็จ\nและรายการที่ยังค้างอยู่', owner:'INV Supervisor', deadline:'หลังนับเสร็จ'},
-      {no:'P-CL2', title:'Export Excel Transfer', detail:'ดึงรายงาน Excel Transfer ของคืนนั้น\nตรวจสอบความครบถ้วน บันทึกเป็นไฟล์แยกตามคืน', owner:'INV Team', deadline:'หลังนับเสร็จ'},
-      {no:'P-CL3', title:'นับ HHT / Router กลับ', detail:'รับคืน HHT ทุกเครื่อง\nนับจำนวนให้ครบ บันทึกลง Control Sheet', owner:'INV Team', deadline:'หลังนับเสร็จ'},
-      {no:'P-CL4', title:'สรุปปัญหาและแจ้งทีม', detail:'สรุปปัญหาที่พบในคืนนั้น\nแจ้งทีมเพื่อป้องกันปัญหาซ้ำในคืนถัดไป', owner:'INV Supervisor', deadline:'หลังนับเสร็จ'},
-    ]
-  },
-  {
-    title: 'Regular Count',
-    sub: 'INV CHECKLIST – ดำเนินการช่วงเย็นก่อน Regular Count และตลอดวัน Regular Count',
-    data: [
-      {type:'cat', name:'🔒  ปิดงาน Pre-Count (ช่วงเย็นก่อน Regular)'},
-      {no:'R-PC1', title:'เบย์ว่าง – สรุป Aisle-Bay Pre-Count', detail:'สรุป Aisle-Bay ทั้งหมดที่ตรวจนับใน Pre-count ครบถ้วน\nตรวจสอบว่าทุก Location ID ถูกปิดแล้ว', owner:'INV Team', deadline:'ก่อน Regular', status:'fail'},
-      {no:'R-PC2', title:'สรุป Excel Transfer (Pre-Count ทั้งหมด)', detail:'รวบรวม Excel Transfer ทุกคืน Pre-count เป็นไฟล์เดียว\nตรวจสอบความครบถ้วนและความถูกต้อง', owner:'INV Team', deadline:'ก่อน Regular'},
-      {no:'R-PC3', title:'Stop Background Process (Pre-Count)', detail:'สั่ง Stop Background Process ที่ใช้ใน Pre-count\nก่อนเริ่ม Regular Count', owner:'INV Team', deadline:'ก่อน Regular'},
-      {no:'R-PC4', title:'Monitor Not-Count + Item Hi & Lo Value', detail:'ดึงรายงานสินค้าที่ยังไม่ได้นับ (Not-Count)\nและรายการ Hi/Lo Value เพื่อเฝ้าระวัง', owner:'INV Team', deadline:'ก่อน Regular'},
-      {type:'cat', name:'⚙️  System – Regular Count'},
-      {no:'R-S1', title:'Start Regular Count Process', detail:'สั่ง Start Process สำหรับ Regular Count\nตรวจสอบ Status ก่อนอนุญาตให้เริ่มนับ', owner:'INV Team', deadline:'เริ่ม Regular'},
-      {no:'R-S2', title:'Freeze Stock (Cut-off)', detail:'บันทึก Stock Freeze ณ เวลา Cut-off\nห้ามรับสินค้าเพิ่มระหว่าง Regular Count', owner:'INV Team + สาขา', deadline:'เวลา Cut-off'},
-      {type:'cat', name:'📦  การนับ Regular Count'},
-      {no:'R-C1', title:'นับสินค้า Hi-Value โดย Supervisor', detail:'Supervisor นับสินค้า Hi-Value ด้วยตนเอง\nหรือกำกับการนับอย่างใกล้ชิด', owner:'INV Supervisor', deadline:'ระหว่าง Regular'},
-      {no:'R-C2', title:'นับสินค้าในห้องเย็น / Frozen', detail:'ตรวจนับสินค้าในห้องเย็นและห้อง Frozen\nใช้ PPE ที่เหมาะสม', owner:'INV Team', deadline:'ระหว่าง Regular'},
-      {no:'R-C3', title:'นับสินค้า Tent & Container', detail:'ตรวจนับสินค้าใน Tent และ Container\nบันทึก Location ให้ชัดเจน', owner:'INV Team', deadline:'ระหว่าง Regular'},
-      {no:'R-C4', title:'นับสินค้า GR / Deposit', detail:'ตรวจนับสินค้าใน GR Area และ Deposit\nแยกรายการให้ชัดเจน', owner:'INV Team', deadline:'ระหว่าง Regular'},
-      {type:'cat', name:'📊  สรุปผล Regular Count'},
-      {no:'R-RPT1', title:'Export Result Regular Count', detail:'ดึงผล Regular Count จากระบบ\nตรวจสอบ Variance กับ Book Stock', owner:'INV Team', deadline:'หลัง Regular'},
-      {no:'R-RPT2', title:'สรุป Variance Report', detail:'วิเคราะห์ผลต่างที่มีนัยสำคัญ\nเตรียมรายการสำหรับ Recheck', owner:'INV Supervisor', deadline:'หลัง Regular'},
-      {no:'R-RPT3', title:'แจ้ง Store Manager ผล Preliminary', detail:'รายงานผลเบื้องต้นให้ Store Manager\nก่อนเริ่มกระบวนการ Recheck', owner:'INV Supervisor', deadline:'หลัง Regular'},
-      {no:'R-RPT4', title:'จัดทำรายการ Recheck List', detail:'สรุปรายการที่ต้องนับซ้ำ (Recheck)\nเรียงลำดับ Priority ตาม Variance', owner:'INV Team', deadline:'หลัง Regular'},
-      {type:'cat', name:'🔧  Equipment & Closeout'},
-      {no:'R-EQ1', title:'นับ HHT / Equipment กลับ', detail:'รับคืนและนับ HHT ทุกเครื่อง\nตรวจสอบสภาพและบันทึก', owner:'INV Team', deadline:'หลัง Regular'},
-    ]
-  },
-  {
-    title: 'Recheck & Final Report',
-    sub: 'INV CHECKLIST – ดำเนินการหลัง Regular Count เสร็จสิ้น – ตรวจสอบและสรุปผล',
-    data: [
-      {type:'cat', name:'📱  Tag & Equipment – Recheck'},
-      {no:'RC-E1', title:'เบิก-คืน HHT / Battery', detail:'เบิก HHT ให้ทีม Recheck บันทึก Control Sheet\nตรวจสอบ Battery ให้เพียงพอ', owner:'สาขา', deadline:'ก่อนเริ่ม Recheck', status:'pending'},
-      {no:'RC-E2', title:'Forklift & Scooter – Battery', detail:'ตรวจสอบแบตเตอรี่ Forklift/Scooter ก่อนเริ่ม Recheck', owner:'สาขา', deadline:'ก่อนเริ่ม Recheck'},
-      {no:'RC-E3', title:'นับ HHT / Router กลับ', detail:'นับและรับคืน HHT ทุกเครื่องหลัง Recheck\nตรวจสอบสภาพและบันทึกการคืน', owner:'INV Team', deadline:'หลัง Recheck'},
-      {no:'RC-E4', title:'Report Invl32 Yearly Count และ เอกสารต่างๆ', detail:'สาขาตรวจสอบเอกสารที่ปริ้นออกที่ห้อง Server\nTransfers, Recheck ทั้งหมด พร้อมนำฝากส่ง Data Safe (บริษัทรับฝากเอกสาร เก็บ 7 ปี)', owner:'สาขา', deadline:'หลัง Apply'},
-      {type:'cat', name:'🔍  Recheck Process'},
-      {no:'RC-C1', title:'นับซ้ำรายการ Variance สูง', detail:'Recheck รายการที่มี Variance เกินเกณฑ์\nบันทึกผลและเหตุผลของ Variance', owner:'INV Supervisor', deadline:'ระหว่าง Recheck'},
-      {no:'RC-C2', title:'Verify Hi-Value Items', detail:'ตรวจสอบซ้ำรายการ Hi-Value ทั้งหมด\nต้องมี Supervisor ร่วมนับและลงนาม', owner:'INV Supervisor', deadline:'ระหว่าง Recheck'},
-      {type:'cat', name:'📊  Final Report'},
-      {no:'RC-F1', title:'สรุปผล Recheck และอัปเดตระบบ', detail:'บันทึกผล Recheck เข้าระบบ\nตรวจสอบว่า Variance ลดลงอยู่ในเกณฑ์', owner:'INV Team', deadline:'หลัง Recheck'},
-      {no:'RC-F2', title:'จัดทำ Final Inventory Report', detail:'สรุปผล Inventory ทั้งหมด\nเปรียบเทียบ Book vs Physical Stock', owner:'INV Supervisor', deadline:'หลัง Recheck'},
-      {no:'RC-F3', title:'Apply ผลตรวจนับเข้าระบบ', detail:'สั่ง Apply ผล Inventory เข้า Stock\nตรวจสอบผลลัพธ์หลัง Apply', owner:'INV Team', deadline:'หลัง Approve'},
-      {type:'cat', name:'✅  Closeout'},
-      {no:'RC-CL1', title:'รายงานผลสรุปให้ผู้บริหาร', detail:'จัดทำ Summary Report สำหรับผู้บริหาร\nรวม Accuracy Rate, Variance, Issues', owner:'INV Supervisor', deadline:'หลัง Apply'},
-    ]
-  }
+const STORES = [
+  ["001","สำนักงานใหญ่"],["002","ลาดพร้าว"],["003","รัชดา"],["004","สุขุมวิท"],["005","สีลม"],
+  ["006","บางนา"],["007","อ่อนนุช"],["008","ราษฎร์บูรณะ"],["009","ปิ่นเกล้า"],["010","ตลิ่งชัน"],
+  ["011","บางแค"],["012","เซ็นทรัลพระราม2"],["013","พระราม3"],["014","ยานนาวา"],["015","สาทร"],
+  ["016","พระโขนง"],["017","มีนบุรี"],["018","หนองจอก"],["019","บึงกุ่ม"],["020","คันนายาว"],
+  ["021","สะพานสูง"],["022","ลาดกระบัง"],["023","บางกะปิ"],["024","บางเขน"],["025","ดอนเมือง"],
+  ["026","หลักสี่"],["027","ลำลูกกา"],["028","คลองหลวง"],["029","ธัญบุรี"],["030","รังสิต"],
+  ["031","ปทุมธานี"],["032","นนทบุรี"],["033","บางบัวทอง"],["034","บางใหญ่"],["035","ปากเกร็ด"],
+  ["036","ติวานนท์"],["037","แจ้งวัฒนะ"],["038","ราษฎร์นิยม"],["039","รัตนาธิเบศร์"],["040","เพชรเกษม"],
+  ["041","บางบอน"],["042","รามอินทรา"],["043","สุวินทวงศ์"],["044","ฉะเชิงเทรา"],["045","ชลบุรี"],
+  ["046","พัทยา"],["047","ระยอง"],["048","จันทบุรี"],["049","ตราด"],["050","นครนายก"],
+  ["051","ปราจีนบุรี"],["052","สระแก้ว"],["053","สระบุรี"],["054","ลพบุรี"],["055","สิงห์บุรี"],
+  ["056","อ่างทอง"],["057","สุพรรณบุรี"],["058","นครปฐม"],["059","สมุทรสาคร"],["060","สมุทรสงคราม"],
+  ["061","กาญจนบุรี"],["062","ราชบุรี"],["063","เพชรบุรี"],["064","ประจวบคีรีขันธ์"],["065","หัวหิน"],
+  ["066","ชะอำ"],["067","เพชรบุรีเขาวัง"],["068","ระนอง"],["069","ชุมพร"],["070","สุราษฎร์ธานี"],
+  ["071","นครศรีธรรมราช"],["072","กระบี่"],["073","ตรัง"],["074","พัทลุง"],["075","สงขลา"],
+  ["076","หาดใหญ่"],["077","ปัตตานี"],["078","ยะลา"],["079","นราธิวาส"],["080","ภูเก็ต"],
+  ["081","พังงา"],["082","เชียงใหม่เมือง"],["083","เชียงใหม่สันทราย"],["084","เชียงใหม่หางดง"],["085","เชียงราย"],
+  ["086","แม่ฮ่องสอน"],["087","ลำปาง"],["088","ลำพูน"],["089","พะเยา"],["090","น่าน"],
+  ["091","แพร่"],["092","อุตรดิตถ์"],["093","พิษณุโลก"],["094","เพชรบูรณ์"],["095","เลย"],
+  ["096","หนองบัวลำภู"],["097","อุดรธานี"],["098","หนองคาย"],["099","นครพนม"],["100","สกลนคร"],
+  ["101","มุกดาหาร"],["102","กาฬสินธุ์"],["103","ขอนแก่น"],["104","มหาสารคาม"],["105","ร้อยเอ็ด"],
+  ["106","ยโสธร"],["107","อำนาจเจริญ"],["108","อุบลราชธานี"],["109","ศรีสะเกษ"],["110","สุรินทร์"],
+  ["111","บุรีรัมย์"],["112","นครราชสีมา"],["113","ชัยภูมิ"],["114","นครราชสีมา2"],["115","ปากช่อง"],
+  ["116","พิจิตร"],["117","กำแพงเพชร"],["118","นครสวรรค์"],["119","ชัยนาท"],["120","อุทัยธานี"],
+  ["121","สุโขทัย"],["122","ตาก"],["123","เชียงใหม่แม่ริม"],["124","เชียงใหม่เชียงดาว"],["125","ฝาง"],
+  ["126","เชียงรายเมือง"],["127","พะเยาเมือง"],["128","แม่สาย"],["129","เชียงของ"],["130","พิษณุโลก2"],
+  ["131","นครสวรรค์2"],["132","ขอนแก่น2"],["133","อุดรธานี2"],["134","อุบลราชธานี2"],["135","นครราชสีมา3"],
+  ["136","บุรีรัมย์2"],["137","สุรินทร์2"],["138","ชลบุรี2"],["139","ระยอง2"],["140","สมุทรปราการ"],
+  ["141","สมุทรสาคร2"],["142","นครปฐม2"],["143","ราชบุรี2"],["144","สุราษฎร์ธานี2"],["145","นครศรีธรรมราช2"],
+  ["146","สงขลา2"],["147","หาดใหญ่2"],["148","ภูเก็ต2"],["149","กระบี่2"],["150","ตรัง2"],
+  ["151","ฉะเชิงเทรา2"],["152","ปราจีนบุรี2"],["153","สระบุรี2"],["154","ลพบุรี2"],["155","อยุธยา"],
+  ["156","อยุธยา2"],["157","ปทุมธานี2"],["158","รังสิต2"],["159","ลำลูกกา2"],["160","นนทบุรี2"],
+  ["161","บางบัวทอง2"],["162","บางใหญ่2"],["163","พระราม4"]
 ];
 
-// State
-const state = {};
-let currentSheet = 0;
-let currentNight = 1;
+const SECTIONS = [
+  {title:"ส่วนที่ 1 : ข้อมูลผู้ประสานงาน",color:"#1A5276",tab:0,items:[
+    {no:"1.1",topic:"ผู้ประสานงานหลัก (SGM / ASGM / Duty)",detail:"ระบุชื่อ-นามสกุล, ตำแหน่ง, เบอร์โทรศัพท์, E-mail",dl:"7 วันก่อน"},
+    {no:"1.2",topic:"ASGM / DUTY ช่วง Pre-count / Regular",detail:"ระบุชื่อ-นามสกุล, ตำแหน่ง, เบอร์ ของ Duty แต่ละวัน",dl:"7 วันก่อน"},
+    {no:"1.3",topic:"ผู้รับผิดชอบดูแล HHT",detail:"ระบุชื่อและเบอร์ติดต่อ – ผู้รับ-คืน HHT ทุกวัน",dl:"7 วันก่อน"},
+    {no:"1.4",topic:"รปภ. ช่วงตรวจนับ",detail:"ระบุจำนวน รปภ. ที่จะประจำอยู่ระหว่างการตรวจนับ",dl:"3 วันก่อน"},
+  ]},
+  {title:"ส่วนที่ 2 : Layout & พื้นที่ตรวจนับ",color:"#1E6E44",tab:1,items:[
+    {no:"2.1",topic:"ยืนยัน Layout แต่ละแผนก",detail:"ตรวจสอบ Layout ที่ส่งให้ Inventory Team ระบุพื้นที่ที่จะนับให้ครบถ้วน",dl:"10 วันก่อน"},
+    {no:"2.2",topic:"ยืนยัน Aisle-Bay / Location ID",detail:"นับและยืนยัน Aisle-Bay ของทุกแผนก รวมพื้นที่พิเศษ (Cold Zone, Outdoor ฯลฯ)",dl:"10 วันก่อน"},
+    {no:"2.3",topic:"สำรวจ Tent / Kiosk / Container",detail:"ระบุจำนวนและตำแหน่ง Tent/Kiosk นอกพื้นที่ทุกแห่ง",dl:"10 วันก่อน"},
+    {no:"2.4",topic:"ยืนยันแผน Aisle-Bay รายคืน Pre-count",detail:"ระบุ Location ID ของแต่ละแผนกในแต่ละคืน Pre-count",dl:"5 วันก่อน"},
+    {no:"2.5",topic:"ยืนยันแผน Aisle-Bay วัน Regular",detail:"ระบุ Aisle-Bay / Location ID ทั้งหมดที่จะนับใน Regular Count",dl:"5 วันก่อน"},
+  ]},
+  {title:"ส่วนที่ 3 : อุปกรณ์ & สิ่งอำนวยความสะดวก",color:"#6C3483",tab:2,items:[
+    {no:"3.1",topic:"รถโฟร์คลิฟ – จำนวนและสภาพ",detail:"ระบุจำนวนรถที่พร้อมใช้งาน, ชื่อพนักงานขับ, ตรวจสอบสภาพรถ",dl:"7 วันก่อน"},
+    {no:"3.2",topic:"แบตเตอรี่รถโฟร์คลิฟ",detail:"ชาร์ตแบตเตอรี่ให้เต็มทุกคัน เตรียมแบตสำรอง",dl:"1 วันก่อน"},
+    {no:"3.3",topic:"ระบบไฟฟ้า (GA ตรวจสอบ)",detail:"GA ตรวจสอบระบบไฟฟ้าในทุกพื้นที่ตรวจนับ รวมถึงไฟฉุกเฉิน",dl:"1 วันก่อน"},
+    {no:"3.4",topic:"สัญญาณ WiFi ในพื้นที่ตรวจนับ",detail:"ทดสอบสัญญาณ WiFi ทุก Aisle-Bay แจ้งจุดอับสัญญาณล่วงหน้า",dl:"1 วันก่อน"},
+    {no:"3.5",topic:"รับ HHT และตรวจสอบสภาพ",detail:"รับ HHT ชาร์ตแบต จัดทำแผ่นป้าย Scan ประจำเครื่อง จัดทำ Sheet เบิก-คืน",dl:"1 วันก่อน"},
+    {no:"3.6",topic:"ป้ายห้ามเคลื่อนย้าย & ป้าย User HHT",detail:"เตรียมป้าย 'ห้ามเคลื่อนย้าย' ติดหน้าชั้นวาง และป้ายแขวนคอ Login-Bay",dl:"1 วันก่อน"},
+    {no:"3.7",topic:"Control Sheet / Bay Control",detail:"เตรียม Control Sheet ประจำ Bay สำหรับ Monitor สถานะการนับแต่ละ Bay",dl:"1 วันก่อน"},
+    {no:"3.8",topic:"ฟิล์มพันพาเลท / เทปใส / เชือกฟาง",detail:"ตรวจสอบว่าอุปกรณ์พร้อมเพียงพอสำหรับแต่ละคืนตรวจนับ",dl:"1 วันก่อน"},
+  ]},
+  {title:"ส่วนที่ 4 : การดำเนินงานแผนกก่อนตรวจนับ",color:"#A0522D",tab:3,items:[
+    {no:"4.1",topic:"GR – ปิดรับสินค้าให้ครบถ้วน",detail:"ยืนยันว่าสินค้าทุกรายการถูกบันทึก GR ครบก่อนเริ่ม Pre-count",dl:"ก่อน Pre-count"},
+    {no:"4.2",topic:"ปรับ Stock Adjustment ให้เรียบร้อย",detail:"ดำเนินการ Adjust Stock ทุกรายการที่ค้างให้เสร็จสิ้น",dl:"ก่อน Pre-count"},
+    {no:"4.3",topic:"ตรวจเช็คและแก้ไข Negative Stock",detail:"ดึงรายงาน Negative Stock ดำเนินการแก้ไขให้หมดก่อนตรวจนับ",dl:"ก่อน Pre-count"},
+    {no:"4.4",topic:"Telesale – ยืนยันรายการรับฝาก (Consignment)",detail:"บันทึกรายการ Consignment / สินค้าฝากซ่อมทั้งหมดให้ครบถ้วน",dl:"ก่อน Pre-count"},
+    {no:"4.5",topic:"จัดเตรียมพนักงาน Support",detail:"ระบุชื่อและแผนกพนักงาน Support ที่ประจำแต่ละ Zone",dl:"3 วันก่อน"},
+    {no:"4.6",topic:"ทำความเข้าใจกระบวนการ Transfer",detail:"Duty และแผนกเข้าใจวิธีการ Transfer สินค้าที่รับเข้าระหว่างนับ",dl:"1 วันก่อน"},
+    {no:"4.7",topic:"ตรวจสอบกิจกรรมที่มีผลต่อการนับสต๊อก",detail:"ยืนยันว่าไม่มีกิจกรรมที่มีผลต่อการนับสต๊อกในช่วงนั้น",dl:"7 วันก่อน"},
+  ]},
+  {title:"ส่วนที่ 5 : แผนรับสินค้าช่วงตรวจนับ",color:"#7D6608",tab:4,items:[
+    {no:"5.1",topic:"แผนรับสินค้า Pre-count คืนที่ 1",detail:"ระบุเวลา / จำนวนคัน / Supplier หลักที่จะรับสินค้าคืนที่ 1",dl:"3 วันก่อน"},
+    {no:"5.2",topic:"แผนรับสินค้า Pre-count คืนที่ 2",detail:"ระบุเวลา / จำนวนคัน / Supplier หลักที่จะรับสินค้าคืนที่ 2",dl:"3 วันก่อน"},
+    {no:"5.3",topic:"แผนรับสินค้า Pre-count คืนที่ 3",detail:"ระบุเวลา / จำนวนคัน / Supplier หลักที่จะรับสินค้าคืนที่ 3",dl:"3 วันก่อน"},
+    {no:"5.4",topic:"แผนรับสินค้า Pre-count คืนที่ 4",detail:"ระบุเวลา / จำนวนคัน / Supplier หลักที่จะรับสินค้าคืนที่ 4",dl:"3 วันก่อน"},
+    {no:"5.5",topic:"แผนรับสินค้าวัน Regular",detail:"ระบุเวลาและแผนรับสินค้าในวัน Regular Count",dl:"3 วันก่อน"},
+  ]},
+  {title:"ส่วนที่ 6 : การยืนยันก่อนตรวจนับ",color:"#174E7C",tab:5,items:[
+    {no:"6.1",topic:"ยืนยันเวลาเริ่ม-สิ้นสุดแต่ละวัน",detail:"ยืนยันเวลา Start/End ของการตรวจนับในแต่ละคืน Pre-count และวัน Regular",dl:"3 วันก่อน"},
+    {no:"6.2",topic:"ยืนยันเวลาเข้าสาขาของทีม Data Pro",detail:"แจ้งเวลาที่ทีม Data Pro จะเข้าถึงสาขาในแต่ละวัน",dl:"3 วันก่อน"},
+    {no:"6.3",topic:"ส่ง Aisle-Bay Plan รายวันให้ Audit Team",detail:"ส่งตาราง Aisle-Bay Plan สำหรับทุกคืน Pre-count และวัน Regular",dl:"3 วันก่อน"},
+    {no:"6.4",topic:"SGM / แผนกเข้าร่วมประชุม",detail:"SGM และผู้รับผิดชอบทุกแผนกเข้าประชุมยืนยันความพร้อมกับ Inventory Team",dl:"2 วันก่อน"},
+    {no:"6.5",topic:"เข้าร่วมการอบรมทีมนับ Data Pro",detail:"ผู้แทนสาขาร่วมฟังอบรมและช่วยสอนวิธีใช้ HHT / ขั้นตอนการนับสินค้า",dl:"1 วันก่อน"},
+  ]},
+];
 
-function getKey(sheetIdx, no, night='') {
-  return `inv_${sheetIdx}_${no}${night ? '_n'+night : ''}`;
+const TOTAL_ITEMS = SECTIONS.reduce((s,sec)=>s+sec.items.length,0);
+const storeData = {};
+let activeStore = null;
+let activeTab = 0;
+
+function getStoreKey(code){return `store_${code}`}
+function loadStore(code){
+  const k=getStoreKey(code);
+  const raw=localStorage.getItem(k);
+  if(raw)return JSON.parse(raw);
+  const d={};
+  SECTIONS.forEach(sec=>sec.items.forEach(it=>{d[it.no]=''}));
+  return d;
+}
+function saveStore(code,data){
+  try{localStorage.setItem(getStoreKey(code),JSON.stringify(data));}catch(e){}
+}
+function getProgress(data){
+  let done=0,total=0;
+  SECTIONS.forEach(sec=>sec.items.forEach(it=>{
+    total++;
+    if(data[it.no]==='done'||data[it.no]==='na')done++;
+  }));
+  return{done,total};
 }
 
-function getStatus(sheetIdx, no, night='') {
-  return localStorage.getItem(getKey(sheetIdx, no, night)) || '';
-}
-
-function setStatus(sheetIdx, no, val, night='') {
-  if (val) localStorage.setItem(getKey(sheetIdx, no, night), val);
-  else localStorage.removeItem(getKey(sheetIdx, no, night));
-}
-
-function getNote(sheetIdx, no, night='') {
-  return localStorage.getItem(getKey(sheetIdx, no, night) + '_note') || '';
-}
-
-function setNote(sheetIdx, no, val, night='') {
-  if (val) localStorage.setItem(getKey(sheetIdx, no, night) + '_note', val);
-  else localStorage.removeItem(getKey(sheetIdx, no, night) + '_note');
-}
-
-function statusClass(s) {
-  if (s === 'done') return 'done';
-  if (s === 'fail') return 'fail';
-  if (s === 'pending') return 'pending';
-  return '';
-}
-
-function statusLabel(s) {
-  if (s === 'done') return '✓ เรียบร้อย';
-  if (s === 'fail') return '✗ ยังไม่เรียบร้อย';
-  if (s === 'pending') return '⏳ กำลังดำเนินการ';
-  return '— ยังไม่ระบุ';
-}
-
-function renderSheet(sheetIdx) {
-  const sheet = SHEETS[sheetIdx];
-  const night = sheetIdx === 1 ? currentNight : '';
-  const container = document.getElementById(`items${sheetIdx}`);
-  let html = '';
-  let catItems = [];
-  let catName = '';
-  let allItems = sheet.data.filter(d => !d.type);
-
-  // Group by category
-  let cats = [];
-  let curCat = {name:'', items:[]};
-  for (const d of sheet.data) {
-    if (d.type === 'cat') {
-      if (curCat.items.length) cats.push({...curCat});
-      curCat = {name: d.name, items: []};
-    } else {
-      curCat.items.push(d);
-    }
-  }
-  if (curCat.items.length) cats.push(curCat);
-
-  for (const cat of cats) {
-    html += `<div class="category-block">
-      <div class="cat-header">
-        <span>${cat.name}</span>
-        <span class="cat-count">${cat.items.length} รายการ</span>
-      </div>`;
-    for (const item of cat.items) {
-      const s = getStatus(sheetIdx, item.no, night) || item.status || '';
-      const n = getNote(sheetIdx, item.no, night) || item.note || '';
-      const sc = statusClass(s);
-      html += `<div class="check-item ${sc}" id="ci_${sheetIdx}_${item.no.replace(/[^a-zA-Z0-9]/g,'_')}${night?'_n'+night:''}">
-        <div class="check-row" onclick="toggleDetail('${sheetIdx}','${item.no}','${night}')">
-          <div class="check-no">${item.no}</div>
-          <div class="check-info">
-            <div class="check-title">${item.title}</div>
-            <div class="check-meta">
-              <span class="meta-tag">👤 ${item.owner}</span>
-              <span class="meta-tag">⏰ ${item.deadline}</span>
-            </div>
-          </div>
-          <div class="check-status" onclick="event.stopPropagation()">
-            <select class="status-select" onchange="changeStatus('${sheetIdx}','${item.no}','${night}',this.value)">
-              <option value="" ${!s?'selected':''}>— ยังไม่ระบุ</option>
-              <option value="done" ${s==='done'?'selected':''}>✓ เรียบร้อย</option>
-              <option value="pending" ${s==='pending'?'selected':''}>⏳ กำลังดำเนินการ</option>
-              <option value="fail" ${s==='fail'?'selected':''}>✗ ยังไม่เรียบร้อย</option>
-            </select>
-          </div>
-          <div class="toggle-btn">▼</div>
-        </div>
-        <div class="check-detail">
-          <div class="detail-grid">
-            <div class="detail-box">
-              <div class="detail-label">📋 รายละเอียด / Action</div>
-              <div class="detail-text">${item.detail}</div>
-            </div>
-            <div class="detail-box">
-              <div class="detail-label">👤 ผู้รับผิดชอบ & กำหนดเวลา</div>
-              <div class="detail-text"><strong>${item.owner}</strong>\n${item.deadline}</div>
-            </div>
-          </div>
-          <textarea class="note-input" rows="2" placeholder="หมายเหตุเพิ่มเติม..." 
-            onchange="saveNote('${sheetIdx}','${item.no}','${night}',this.value)">${n}</textarea>
-        </div>
-      </div>`;
-    }
-    html += '</div>';
-  }
-
-  container.innerHTML = html;
-  updateSummary(sheetIdx, night);
-  updateProgress();
-}
-
-function toggleDetail(si, no, night) {
-  const id = `ci_${si}_${no.replace(/[^a-zA-Z0-9]/g,'_')}${night?'_n'+night:''}`;
-  const el = document.getElementById(id);
-  if (el) el.classList.toggle('open');
-}
-
-function changeStatus(si, no, night, val) {
-  setStatus(parseInt(si), no, val, night);
-  const id = `ci_${si}_${no.replace(/[^a-zA-Z0-9]/g,'_')}${night?'_n'+night:''}`;
-  const el = document.getElementById(id);
-  if (el) {
-    el.className = `check-item ${statusClass(val)}`;
-    if (el.classList.contains('open')) el.classList.add('open');
-  }
-  updateSummary(parseInt(si), night);
-  updateProgress();
-}
-
-function saveNote(si, no, night, val) {
-  setNote(parseInt(si), no, val, night);
-}
-
-function updateSummary(si, night='') {
-  const sheet = SHEETS[si];
-  const items = sheet.data.filter(d => !d.type);
-  let done=0, fail=0, pending=0, empty=0;
-  for (const item of items) {
-    const s = getStatus(si, item.no, night) || item.status || '';
-    if (s==='done') done++;
-    else if (s==='fail') fail++;
-    else if (s==='pending') pending++;
-    else empty++;
-  }
-  const total = items.length;
-  document.getElementById(`sum${si}`).innerHTML = `
-    <div class="sum-pill sum-done">✓ เรียบร้อย ${done}</div>
-    <div class="sum-pill sum-pending">⏳ กำลังดำเนินการ ${pending}</div>
-    <div class="sum-pill sum-fail">✗ ยังไม่เรียบร้อย ${fail}</div>
-    <div class="sum-pill sum-empty">— ยังไม่ระบุ ${empty}</div>`;
-  if (document.getElementById(`s${si}-done`)) {
-    document.getElementById(`s${si}-done`).textContent = done;
-  }
-}
-
-function updateProgress() {
-  let total = 0, done = 0;
-  for (let si = 0; si < SHEETS.length; si++) {
-    const items = SHEETS[si].data.filter(d => !d.type);
-    const night = si === 1 ? currentNight : '';
-    for (const item of items) {
-      total++;
-      const s = getStatus(si, item.no, night) || item.status || '';
-      if (s === 'done') done++;
-    }
-  }
-  const pct = total ? Math.round(done/total*100) : 0;
-  document.getElementById('prog-text').textContent = `${done} / ${total}`;
-  document.getElementById('prog-bar').style.width = pct + '%';
-}
-
-function showSheet(idx) {
-  document.querySelectorAll('.sheet-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById(`sheet${idx}`).classList.add('active');
-  document.getElementById(`tab${idx}`).classList.add('active');
-  currentSheet = idx;
-  document.getElementById('topbar-title').textContent = SHEETS[idx].title;
-  document.getElementById('topbar-sub').textContent = SHEETS[idx].sub;
-  if (window.innerWidth <= 768) closeSidebar();
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-function selectNight(n, btn) {
-  currentNight = n;
-  document.querySelectorAll('.night-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderSheet(1);
-}
-
-function resetSheet() {
-  if (!confirm('รีเซ็ตสถานะทุกรายการในหน้านี้?')) return;
-  const sheet = SHEETS[currentSheet];
-  const night = currentSheet === 1 ? currentNight : '';
-  const items = sheet.data.filter(d => !d.type);
-  for (const item of items) {
-    setStatus(currentSheet, item.no, '', night);
-    setNote(currentSheet, item.no, '', night);
-  }
-  renderSheet(currentSheet);
-}
-
-function markAllDone() {
-  const sheet = SHEETS[currentSheet];
-  const night = currentSheet === 1 ? currentNight : '';
-  const items = sheet.data.filter(d => !d.type);
-  for (const item of items) {
-    setStatus(currentSheet, item.no, 'done', night);
-  }
-  renderSheet(currentSheet);
-}
-
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('overlay').classList.toggle('show');
-}
-
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('show');
-}
-
-const STORES = ["001 - Lat Phrao", "002 - Chaeng Watthana", "003 - Srinakarin", "004 - Bangbon", "005 - Chon Buri", "006 - Chiang Mai", "007 - Nakhon Ratchasima", "008 - Rangsit", "009 - Hat Yai", "010 - Udon Thani", "011 - Phitsanulok", "012 - Khon Kaen", "013 - Surat Thani", "014 - Ubon Ratchathani", "015 - Rayong", "016 - Nakhon Sawan", "017 - Charansanitwong", "018 - Sathon", "019 - Nakhon Pathom", "020 - Surin", "021 - Samsen", "022 - Nakhon Si Thammarat", "023 - Chiang Rai", "024 - Sakon Nakhon", "025 - Suphan Buri", "026 - Chanthaburi", "027 - Phuket", "028 - Roi Et", "029 - Trang", "030 - Sa Kaeo", "031 - Koh Samui", "032 - Buri Ram", "033 - Si Sa Ket", "034 - Lamphun", "035 - Krabi", "036 - Phetchaburi", "037 - Chaiyaphum", "038 - Saraburi", "039 - Pranburi", "040 - Chachoengsao", "041 - Chiang Mai 2_Hang Dong", "042 - Ram Inthra", "043 - Chumphon", "044 - Pattaya", "045 - Kamphaeng Phet", "046 - Kanchanaburi", "047 - Lop Buri", "048 - Nong Khai", "049 - Ratchaburi", "050 - Mae Rim", "051 - Ayutthaya", "052 - Lampang", "053 - Hua Hin", "054 - Khlong Luang", "055 - Loei", "056 - Phetchabun", "057 - Bang Phli", "058 - Mukdahan", "059 - Satun", "060 - Trat", "061 - Chum Phae", "062 - Rawai", "063 - Nakhon Phanom", "064 - Koh Pha Ngan", "065 - Bueng Kan", "066 - North Pattaya", "067 - Mae Sai", "068 - Salaya", "069 - Phatthalung", "070 - Sukhothai", "071 - Patong", "072 - Samut Sakhon", "073 - Mae Sot", "074 - Pak Chong", "075 - Thalang", "076 - Ranong", "077 - Lamai", "078 - Kanlapaphruek", "079 - Yasothon", "080 - Maha Sarakham", "081 - Fang", "082 - Nakhon Nayok", "083 - Nakhon In", "084 - Ban Phe", "085 - Thung Song", "086 - Srinakarin 2", "087 - Phayao", "089 - Phitsanulok 2", "091 - F-Talad Mueang Mai (M-St.6)", "095 - F-Si Racha (M-St.109)", "096 - Town In Town", "100 - Phrae", "101 - Koh Chang", "102 - Nakhon Ratchasima 2", "103 - Nan", "104 - Ao Nang", "105 - Karon", "106 - Warin Chamrap", "107 - Nong Bua Lam Phu", "108 - Nong Chok", "109 - Laem Chabang", "110 - Prachuap Khiri Khan", "111 - Phet Kasem", "113 - Wang Hin", "114 - Sing Buri", "115 - Bang Bua Thong", "116 - Kalasin", "117 - Udom Suk", "118 - Ramkhamhaeng (Sammakorn)", "119 - Phichit", "120 - Pathum Thani", "121 - Bodindecha", "122 - Pracha Uthit", "123 - Sukhumvit 71", "124 - Nawamin 70", "125 - Cha-am", "126 - On Nut", "127 - Suksawat", "128 - Kabin Buri", "129 - Lat Krabang", "130 - Na Thong Charoen", "131 - Bo Win", "132 - Sattahip", "133 - Ramkhamhaeng 24", "134 - Amata Nakorn", "135 - Bang Kho Laem", "136 - Khon Kaen 2", "137 - Wongsakorn 2", "138 - Meng Jai", "139 - Sukhumvit 22", "140 - Chan Road", "141 - Lam Luk Ka", "142 - Phraeksa", "143 - Pradit Manutham", "144 - Rungroj Market (Khlong 4)", "145 - Phongphet", "146 - Uttaradit", "147 - Mueang Thong", "148 - Liap Khlong 2", "149 - Om Noi", "150 - Sanam Bin Nam", "151 - Thep Rak", "152 - Samut Songkhram", "153 - Wiang Sa", "154 - Prachin Buri", "155 - Pinklao", "156 - Samut Prakan", "157 - Nakhon Ratchasima 3 (Save One)", "158 - Nakhon Sawan 2 (Phrom Nimit)", "159 - Udon Thani 2 (Ban Lueam)", "160 - Mahachai", "161 - Khon Kaen 3 (Ban Non Muang)", "162 - Amata Nakorn 2", "163 - Songkhla", "164 - Chai Nat", "165 - Si Ayutthaya Road", "166 - Rawai 2", "167 - Chiang Mai (Chom Thong)", "168 - Ban Bueng (Chon Buri)", "169 - Phangnga", "170 - Amnat Charoen", "171 - Jo Ho (Nakhon Ratchasima)", "172 - Ban Phai", "175 - Happitat (Bangna)", "301 - Rama 4", "303 - Siri Mangkhalachan", "350 - Ram Inthra KM.4", "351 - Sino Park", "352 - Phatthanakan"];
-
-let selectedStore = localStorage.getItem('inv_selected_store') || '';
-
-function initStoreBar() {
-  if (selectedStore) {
-    showStoreBadge(selectedStore);
-    showContent();
-  } else {
-    showNoStore();
-  }
-  renderAllStores();
-}
-
-function renderAllStores(filter='') {
-  const dd = document.getElementById('store-dropdown');
-  const fl = filter.toLowerCase();
-  const filtered = fl ? STORES.filter(s => s.toLowerCase().includes(fl)) : STORES;
-  if (filtered.length === 0) {
-    dd.innerHTML = '<div class="store-option" style="color:var(--muted);text-align:center">ไม่พบสาขา</div>';
-    return;
-  }
-  dd.innerHTML = filtered.map(s => 
-    `<div class="store-option${s===selectedStore?' selected':''}" 
-      onmousedown="selectStore('${s}')">${s}</div>`
-  ).join('');
-}
-
-function filterStores() {
-  const val = document.getElementById('store-input').value;
-  renderAllStores(val);
-  document.getElementById('store-dropdown').classList.add('show');
-}
-
-function openDropdown() {
-  renderAllStores(document.getElementById('store-input').value);
-  document.getElementById('store-dropdown').classList.add('show');
-}
-
-function closeDropdownDelay() {
-  setTimeout(() => {
-    document.getElementById('store-dropdown').classList.remove('show');
-  }, 200);
-}
-
-function selectStore(store) {
-  selectedStore = store;
-  localStorage.setItem('inv_selected_store', store);
-  document.getElementById('store-input').value = '';
-  showStoreBadge(store);
-  showContent();
-  renderAllStores();
-  // Update topbar sub
-  document.getElementById('topbar-sub').textContent = '📍 ' + store;
-}
-
-function clearStore() {
-  selectedStore = '';
-  localStorage.removeItem('inv_selected_store');
-  document.getElementById('store-selected').style.display = 'none';
-  document.getElementById('store-search-wrap').style.display = 'flex';
-  showNoStore();
-}
-
-function showStoreBadge(store) {
-  document.getElementById('store-badge-text').textContent = store;
-  document.getElementById('store-selected').style.display = 'block';
-  document.getElementById('store-search-wrap').style.display = 'none';
-}
-
-function showContent() {
-  document.getElementById('no-store-msg').style.display = 'none';
-  document.querySelectorAll('.sheet-section').forEach(s => {
-    if (s.id === 'sheet' + currentSheet) s.style.display = 'block';
+function buildStoreList(filter=''){
+  const list=document.getElementById('store-list');
+  list.innerHTML='';
+  const f=filter.toLowerCase();
+  STORES.forEach(([code,name])=>{
+    if(f&&!code.includes(f)&&!name.includes(f))return;
+    const data=storeData[code]||(storeData[code]=loadStore(code));
+    const{done,total}=getProgress(data);
+    const div=document.createElement('div');
+    div.className='store-item'+(activeStore===code?' active':'');
+    div.innerHTML=`<div><div>${name}</div><div class="store-code">สาขา ${code}</div></div><div class="store-dot${done===total?' done':done>0?' partial':''}"></div>`;
+    div.onclick=()=>selectStore(code);
+    list.appendChild(div);
   });
 }
 
-function showNoStore() {
-  document.getElementById('no-store-msg').style.display = 'block';
-  document.querySelectorAll('.sheet-section').forEach(s => s.style.display = 'none');
+function selectStore(code){
+  activeStore=code;
+  if(!storeData[code])storeData[code]=loadStore(code);
+  document.getElementById('empty-state').style.display='none';
+  document.getElementById('checklist-area').style.display='block';
+  const store=STORES.find(s=>s[0]===code);
+  document.getElementById('banner-name').textContent=`สาขา ${code} – ${store[1]}`;
+  renderBannerStats();
+  renderTab();
+  buildStoreList(document.getElementById('store-search').value);
 }
 
-// Override showSheet to check store
-const _origShowSheet = showSheet;
-window.showSheet = function(idx) {
-  _origShowSheet(idx);
-  if (!selectedStore) {
-    showNoStore();
-  }
-};
+function renderBannerStats(){
+  const data=storeData[activeStore];
+  const{done,total}=getProgress(data);
+  const pct=Math.round(done/total*100);
+  const wip=Object.values(data).filter(v=>v==='wip').length;
+  document.getElementById('banner-stats').innerHTML=
+    `<div class="stat-pill stat-done"><i class="ti ti-circle-check" aria-hidden="true"></i> ${done}/${total} เสร็จ</div>`+
+    `<div class="stat-pill stat-pend"><i class="ti ti-clock" aria-hidden="true"></i> ${wip} กำลังดำเนินการ</div>`+
+    `<div class="stat-pill">${pct}%</div>`;
+}
 
-// Init
-for (let i = 0; i < SHEETS.length; i++) renderSheet(i);
-initStoreBar();
+function renderTab(){
+  const area=document.getElementById('checklist-area');
+  area.innerHTML='';
+  const data=storeData[activeStore];
+  SECTIONS.filter(s=>s.tab===activeTab).forEach(sec=>{
+    const head=document.createElement('div');
+    head.className='section-head';
+    head.style.background=sec.color;
+    head.textContent=sec.title;
+    area.appendChild(head);
+    sec.items.forEach(it=>{
+      const row=document.createElement('div');
+      row.className='checklist-row';
+      const val=data[it.no]||'';
+      const cls=val==='done'?'s-done':val==='nope'?'s-nope':val==='wip'?'s-wip':val==='na'?'s-na':'';
+      row.innerHTML=`
+        <div>
+          <div class="item-topic">${it.no} &nbsp;${it.topic}</div>
+          <div class="item-detail">${it.detail}</div>
+        </div>
+        <div class="item-deadline"><i class="ti ti-clock" aria-hidden="true" style="font-size:11px;margin-right:3px"></i>${it.dl}</div>
+        <select class="status-select ${cls}" data-no="${it.no}">
+          <option value="">— เลือกสถานะ —</option>
+          <option value="done" ${val==='done'?'selected':''}>✓ เรียบร้อย</option>
+          <option value="wip" ${val==='wip'?'selected':''}>⏳ กำลังดำเนินการ</option>
+          <option value="nope" ${val==='nope'?'selected':''}>✗ ยังไม่เรียบร้อย</option>
+          <option value="na" ${val==='na'?'selected':''}>N/A</option>
+        </select>`;
+      area.appendChild(row);
+    });
+  });
+  area.querySelectorAll('.status-select').forEach(sel=>{
+    sel.onchange=function(){
+      const no=this.dataset.no;
+      storeData[activeStore][no]=this.value;
+      saveStore(activeStore,storeData[activeStore]);
+      this.className='status-select '+(this.value==='done'?'s-done':this.value==='nope'?'s-nope':this.value==='wip'?'s-wip':this.value==='na'?'s-na':'');
+      renderBannerStats();
+      buildStoreList(document.getElementById('store-search').value);
+    };
+  });
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.onclick=function(){
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    activeTab=+this.dataset.tab;
+    if(activeStore)renderTab();
+  };
+});
+document.getElementById('store-search').oninput=function(){buildStoreList(this.value)};
+
+STORES.forEach(([code])=>{storeData[code]=loadStore(code)});
+buildStoreList();
 </script>
-</body>
-</html>
